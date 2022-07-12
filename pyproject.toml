@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "atuin-audit"
+name = "sentinel"
 version = "0.1.0"
-description = "Atuin Audit is an audit storage system"
+description = "Sentinel is an audit storage system"
 authors = ["Oscar Carballal <oscar@lareira.digital>"]
 license = "GPLv3"
 

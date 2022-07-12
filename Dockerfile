@@ -6,26 +6,31 @@ WORKDIR /app
 COPY . /app/
 RUN poetry install --no-dev --no-root --no-interaction
 
-### TEST BASE IMAGE ###
-FROM base-image as test-base-image
-ENV WORKERS="1" \
-    LOG_LEVEL="debug"
 
-RUN poetry install --no-root --no-interaction
+#########################################
+### FOR NOW ALL OF THIS IS USELESS ######
+#########################################
 
-### BLACK IMAGE ***
-FROM test-base-image as black-test-image
+# ### TEST BASE IMAGE ###
+# FROM base-image as test-base-image
+# ENV WORKERS="1" \
+#     LOG_LEVEL="debug"
 
-ENTRYPOINT /entrypoints/black_entrypoint.sh $0 $@
+# RUN poetry install --no-root --no-interaction
 
-CMD ["--target-version py310", "--check", " --line-length 80", "."]
+# ### BLACK IMAGE ***
+# FROM test-base-image as black-test-image
 
-### UNIT TEST IMAGE ###
-FROM test-base-image as unit-test-image
+# ENTRYPOINT /entrypoints/black_entrypoint.sh $0 $@
 
-ENTRYPOINT /entrypoints/pytest_entrypoint.sh $0 $@
+# CMD ["--target-version py310", "--check", " --line-length 80", "."]
 
-CMD ["--cov=app", "--cov-report=xml:/test_coverage_reports/unit_tests_coverage.xml"]
+# ### UNIT TEST IMAGE ###
+# FROM test-base-image as unit-test-image
+
+# ENTRYPOINT /entrypoints/pytest_entrypoint.sh $0 $@
+
+# CMD ["--cov=app", "--cov-report=xml:/test_coverage_reports/unit_tests_coverage.xml"]
 
 ### DEVELOPMENT IMAGE ###
 FROM base-image as development-image
@@ -36,11 +41,11 @@ ENV WORKERS="1" \
 RUN poetry install --no-root --no-interaction
 COPY . /application_root/
 
-### PRODUCTION IMAGE ####
-FROM base-image as production-image
-ENV WORKERS="1" \
-    RELOAD="False" \
-    LOG_LEVEL="info"
+# ### PRODUCTION IMAGE ####
+# FROM base-image as production-image
+# ENV WORKERS="1" \
+#     RELOAD="False" \
+#     LOG_LEVEL="info"
 
-RUN poetry install --no-dev --no-root --no-interaction
+# RUN poetry install --no-dev --no-root --no-interaction
 
