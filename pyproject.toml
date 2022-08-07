@@ -17,6 +17,7 @@ black = "*"
 pytest-vcr = "*"
 python-dotenv = "*"
 immudb-py = "*"
+uvloop = "^0.16.0"
 
 [tool.poetry.dev-dependencies]
 ipython = "*"

@@ -3,11 +3,11 @@ access_log_format = '%(h)s %(l)s %(l)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"
 alpn_protocols = ['h2', 'http/1.1']
 backlog = 100
 bind = 80
-debug = True
+debug = true
 keep_alive_timeout = 20
-use_reloader = True
+use_reloader = true
 server_names = "ld-sentinel-ingress"
 # The reason for uvloop is compatibility with the current code but
 # we should migrate to trio
-worker_class = uvloop
-workers = 4
+worker_class = "uvloop"
+workers = 1
