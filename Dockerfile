@@ -1,51 +1,39 @@
-FROM lareiradigital/base-alpine:py310-hyper-poet as base-image
+FROM python:3.10-alpine
+LABEL maintainer="Oscar Carballal Prego <oscar@lareira.digital>"
 
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONPATH=/app \
+    POETRY_HOME=/opt/poetry \
+    POETRY_VIRTUALENVS_PATH="/app/.venv" \
+    POETRY_VIRTUALENVS_IN_PROJECT=true 
+
+RUN apk add --no-cache \
+        curl \
+        gcc \
+        g++ \
+        libressl-dev \
+        musl-dev \
+        libffi-dev \
+    && curl -sSL https://install.python-poetry.org | python3 - 
+
+RUN mkdir -p /app
+ENV PATH="$POETRY_HOME/bin:/app:$PATH"
 WORKDIR /app
-
-### COMMON THINGS ###
 COPY . /app/
+RUN chmod +x /app/startup_script.sh
 RUN poetry install --no-dev --no-root --no-interaction
 
+# Cleanup
+RUN apk del \
+        curl \
+        gcc \
+        g++ \
+        libressl-dev \
+        musl-dev \
+        libffi-dev
+RUN rm -rf /app/.git/
 
-#########################################
-### FOR NOW ALL OF THIS IS USELESS ######
-#########################################
+EXPOSE 80
 
-# ### TEST BASE IMAGE ###
-# FROM base-image as test-base-image
-# ENV WORKERS="1" \
-#     LOG_LEVEL="debug"
-
-# RUN poetry install --no-root --no-interaction
-
-# ### BLACK IMAGE ***
-# FROM test-base-image as black-test-image
-
-# ENTRYPOINT /entrypoints/black_entrypoint.sh $0 $@
-
-# CMD ["--target-version py310", "--check", " --line-length 80", "."]
-
-# ### UNIT TEST IMAGE ###
-# FROM test-base-image as unit-test-image
-
-# ENTRYPOINT /entrypoints/pytest_entrypoint.sh $0 $@
-
-# CMD ["--cov=app", "--cov-report=xml:/test_coverage_reports/unit_tests_coverage.xml"]
-
-### DEVELOPMENT IMAGE ###
-FROM base-image as development-image
-ENV WORKERS="1" \
-    RELOAD="True" \
-    LOG_LEVEL="debug"
-
-RUN poetry install --no-root --no-interaction
-COPY . /application_root/
-
-# ### PRODUCTION IMAGE ####
-# FROM base-image as production-image
-# ENV WORKERS="1" \
-#     RELOAD="False" \
-#     LOG_LEVEL="info"
-
-# RUN poetry install --no-dev --no-root --no-interaction
-
+ENTRYPOINT ["./startup_script.sh"]

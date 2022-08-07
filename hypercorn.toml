@@ -6,6 +6,7 @@ bind = 80
 debug = True
 keep_alive_timeout = 20
 use_reloader = True
+server_names = "ld-sentinel-ingress"
 # The reason for uvloop is compatibility with the current code but
 # we should migrate to trio
 worker_class = uvloop

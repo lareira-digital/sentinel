@@ -4,23 +4,10 @@ services:
   app:
     build:
       context: .
-      target: "development-image"
     ports:
       - "80:80"
     depends_on:
       - audit_db
-  # black-test:
-  #   build:
-  #     context: .
-  #     target: "black-test-image"
-  # unit-tests:
-  #   build:
-  #     context: .
-  #     target: "unit-test-image"
-  # load-tests:
-  #   build:
-  #     context: .
-  #     target: "load-test-image"
   audit_db:
     image: codenotary/immudb:latest
     restart: unless-stopped

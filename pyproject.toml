@@ -16,6 +16,7 @@ pytz = "*"
 black = "*"
 pytest-vcr = "*"
 python-dotenv = "*"
+immudb-py = "*"
 
 [tool.poetry.dev-dependencies]
 ipython = "*"
