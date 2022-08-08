@@ -1,6 +1,7 @@
 image: alpine/latest
 packages:
   - docker
+  - docker-compose
 secrets:
   - 3a9edb55-a0f9-4780-ae24-4d2089236335
 sources:
@@ -11,6 +12,8 @@ tasks:
       . ~/.dockersecrets
       docker login -u $DOCKER_USER -p $DOCKER_TOKEN >/dev/null 2>&1
       set -x
+  - startdocker:
+      service docker start
   - build: |
       cd sentinel
       docker build -t lareiradigital/sentinel:latest .
