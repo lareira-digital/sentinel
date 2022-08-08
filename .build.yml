@@ -12,6 +12,7 @@ tasks:
       docker login -u $DOCKER_USER -p $DOCKER_TOKEN >/dev/null 2>&1
       set -x
   - build: |
+      cd sentinel
       docker build -t lareiradigital/sentinel:latest .
   - submit: |
       docker push lareiradigital/sentinel:latest
