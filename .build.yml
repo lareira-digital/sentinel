@@ -1,0 +1,18 @@
+image: alpine/latest
+packages:
+  - docker
+secrets:
+  - 3a9edb55-a0f9-4780-ae24-4d2089236335
+sources:
+  - https://git.sr.ht/~oscarcp/sentinel
+tasks:
+  - dockerlogin: |
+      set +x
+      . ~/.dockersecrets
+      docker login -u $DOCKER_USER -p $DOCKER_TOKEN >/dev/null 2>&1
+      set -x
+  - build: |
+      docker build -t lareiradigital/sentinel:latest .
+  - submit: |
+      docker push lareiradigital/sentinel:latest
+  
