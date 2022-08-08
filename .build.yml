@@ -2,21 +2,23 @@ image: alpine/latest
 packages:
   - docker
   - docker-compose
+  - shadow
 secrets:
   - 3a9edb55-a0f9-4780-ae24-4d2089236335
 sources:
   - https://git.sr.ht/~oscarcp/sentinel
 tasks:
-  - dockerlogin: |
+  - docker: |
       set +x
       . ~/.dockersecrets
       docker login -u $DOCKER_USER -p $DOCKER_TOKEN >/dev/null 2>&1
-      set -x
-  - startdocker:
+      sudo usermod -aG docker $USER
       service docker start
-  - build: |
+      sleep 5
+      set -x
+  - buildimage: |
       cd sentinel
       docker build -t lareiradigital/sentinel:latest .
-  - submit: |
+  - pushdockerhub: |
       docker push lareiradigital/sentinel:latest
   

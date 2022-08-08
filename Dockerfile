@@ -15,6 +15,7 @@ RUN apk add --no-cache \
         libressl-dev \
         musl-dev \
         libffi-dev \
+        build-base \
     && curl -sSL https://install.python-poetry.org | python3 - 
 
 RUN mkdir -p /app
@@ -31,7 +32,8 @@ RUN apk del \
         g++ \
         libressl-dev \
         musl-dev \
-        libffi-dev
+        libffi-dev \ 
+        build-base
 RUN rm -rf /app/.git/
 
 EXPOSE 80
