@@ -3,7 +3,7 @@ name = "sentinel"
 version = "0.1.0"
 description = "Sentinel is an audit storage system"
 authors = ["Oscar Carballal <oscar@lareira.digital>"]
-license = "GPLv3"
+license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -13,8 +13,6 @@ hypercorn = "*"
 PyJWT = "*"
 ujson = "*"
 pytz = "*"
-black = "*"
-pytest-vcr = "*"
 python-dotenv = "*"
 immudb-py = "*"
 uvloop = "*"
@@ -22,6 +20,8 @@ uvloop = "*"
 [tool.poetry.dev-dependencies]
 ipython = "*"
 ipdb = "*"
+black = "*"
+pytest-vcr = "*"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

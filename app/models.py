@@ -6,7 +6,7 @@
 
 from datetime import datetime
 
-from typing import List, Union
+from typing import List, Union, Optional
 from pydantic import BaseModel, Field
 
 
@@ -50,6 +50,22 @@ class AuditResponse(BaseModel):
     entries: List[CommonResponse]
 
 
-class WrongRequest(BaseModel):
-    error: str
-    message: str
+class ResponseModel(BaseModel):
+    status: str = Field(
+        None,
+        alias="Status",
+        title="Status of the request",
+        description="Status of the request (success, fail or error)"
+    )
+    message: Optional[str] = Field(
+        None,
+        alias="Message",
+        title="Informational Message",
+        description="Mesage describing what happened to the request"
+    )
+    data: Optional[str] = Field(
+        None,
+        alias="Data",
+        title="Request data",
+        description="Data that failed during the request"
+    )
