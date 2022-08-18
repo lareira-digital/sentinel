@@ -12,6 +12,5 @@ security notifications, etc.
 # Docker
 
 
-# License
 
 # Contributing
