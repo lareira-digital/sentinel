@@ -11,7 +11,6 @@ security notifications, etc.
 
 # Docker
 
-# Tests
 
 # License
 
